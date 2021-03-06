@@ -1,4 +1,4 @@
-#download & install instructions:
+# download & install instructions:
 
 - git clone https://github.com/erichunzeker/evgo.git
 - cd evgo
