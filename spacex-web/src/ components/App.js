@@ -45,7 +45,12 @@ const GET_LAUNCHES = gql`
 
 function App() {
     const classes = useStyles();
+
+    // pastLaunches is the mutable list that the table will read from.
+    // the search functionality will call 'setPastLaunches' while the 'data' variable
+    // remains unchanged so that only 1 initial api call is needed
     const [pastLaunches, setPastLaunches] = useState([]);
+
     const {loading, data} = useQuery(GET_LAUNCHES, {
         onCompleted: (data) => {
             setPastLaunches(data.pastLaunches)
@@ -64,6 +69,7 @@ function App() {
             </Typography>
             {data &&
                 <Container maxWidth="lg" component="main" className={classes.searchBar}>
+                    {/* pass hook to searchbar to allow this child component to alter the state that the table renders */}
                     <SearchBar setPastLaunches={setPastLaunches} pastLaunches={data.pastLaunches} />
                 </Container>}
             {loading ?

@@ -45,13 +45,18 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchBar({setPastLaunches, pastLaunches}) {
     const classes = useStyles();
+    // user will change search type on dropdown, default search is set to search by mission name
     const [searchType, setSearchType] = useState('missionName');
+    // searchValue variable is set by setSearchValue hook to keep track of input
     const [searchValue, setSearchValue] = useState('');
 
     function filterResults() {
+        // if user searches empty string, reset data back to original from graphql response
         if (searchValue === '') {
             setPastLaunches(pastLaunches)
         }
+        // filter pastLaunches array based on searchType - since the setPastLaunches hook is passed in through props,
+        // the launch table will rerender it's data anytime the search filter changes the array
         else if (searchType !== 'launchYear') {
             let val = searchValue.toLowerCase();
             setPastLaunches(pastLaunches.filter(launch => launch[searchType].toLowerCase().includes(val)))
@@ -68,7 +73,6 @@ function SearchBar({setPastLaunches, pastLaunches}) {
                 className={classes.search}
                 elevation={1}
             >
-
                 <Select
                     className={classes.searchFilter}
                     disableUnderline={true}
@@ -86,7 +90,7 @@ function SearchBar({setPastLaunches, pastLaunches}) {
                     disableUnderline
                     placeholder={"Search"}
                     onKeyDown={(e) => {
-                        // Searching when 'Enter' key is pressed
+                        // handle search by pressing enter key
                         if (e.key === 'Enter') filterResults();
                     }}
                     value={searchValue}

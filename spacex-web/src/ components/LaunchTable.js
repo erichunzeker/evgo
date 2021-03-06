@@ -27,6 +27,7 @@ function LaunchTable({pastLaunches}) {
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
+                        {/* iterate through columns array to dynamically generate table header cells */}
                         {columns.map(fieldName => (
                             <TableCell key={fieldName} align={fieldName === 'Mission Name' ? 'left' : 'right'}>
                                 <Typography variant="h5" color="textPrimary">{fieldName}</Typography>
@@ -35,11 +36,14 @@ function LaunchTable({pastLaunches}) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
+                    {/* assigning a table row to each element of pastLaunches array*/}
                     {pastLaunches.map((row) => (
                         <TableRow key={row.missionName}>
+                            {/* ignore __typename field and generate table cells for each field in the row */}
                             {Object.keys(row).map(fieldName => (
                                 fieldName !== "__typename" &&
                                 <TableCell key={fieldName} align={fieldName === 'missionName' ? 'left' : 'right'}>
+                                    {/* render different table cell inner text if the field is a video link*/}
                                     {fieldName === 'videoLink' ?
                                         <Typography variant="subtitle1" color="textPrimary"><a href={row[fieldName]} target="_blank" rel="noopener noreferrer">{row[fieldName]}</a></Typography>
                                         :
